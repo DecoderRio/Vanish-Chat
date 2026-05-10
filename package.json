@@ -1,0 +1,14 @@
+{
+  "name": "vanish-chat",
+  "version": "1.0.0",
+  "description": "Modern chat application with auto-delete messages - Full Python Stack",
+  "scripts": {
+    "dev": "concurrently \"npm run server\" \"npm run frontend\"",
+    "server": "cd server && python main.py",
+    "frontend": "cd frontend && streamlit run app.py",
+    "install-all": "cd server && pip install -r requirements.txt && cd ../frontend && pip install -r requirements.txt"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
