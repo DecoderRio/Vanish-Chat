@@ -14,9 +14,10 @@ export default function Login({ onLogin }) {
     e.preventDefault()
     setError('')
     
+    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000'
     const url = isLogin 
-      ? 'http://localhost:5000/api/login'
-      : 'http://localhost:5000/api/register'
+      ? `${API_URL}/api/login`
+      : `${API_URL}/api/register`
     
     try {
       const response = await fetch(url, {

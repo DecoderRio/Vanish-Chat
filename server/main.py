@@ -19,9 +19,12 @@ load_dotenv()
 app = FastAPI()
 
 # CORS middleware
+# Allow multiple origins for local development and production
+CORS_ORIGINS = os.getenv("CORS_ORIGINS", "http://localhost:8501,http://localhost:5173,http://localhost:3000").split(",")
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:8501"],
+    allow_origins=CORS_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

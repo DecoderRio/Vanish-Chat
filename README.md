@@ -79,6 +79,39 @@ Quick deployment options:
 - **Docker**: `docker build -t vanish-chat . && docker run -p 5000:5000 -p 8501:8501 vanish-chat`
 - **Cloud**: See DEPLOY.md for Render, Heroku, and PythonAnywhere instructions
 
+### Deploy Frontend on Netlify + Backend on Render (Recommended Free Setup)
+
+**Why this combo?**
+- Netlify: Excellent free static hosting for React frontend
+- Render: Free Python backend hosting with WebSocket support
+
+**Steps:**
+
+1. **Deploy Backend on Render:**
+   - Go to [render.com](https://render.com) and create a Web Service
+   - Connect your GitHub repo
+   - Configure:
+     - Build Command: `pip install -r server/requirements.txt`
+     - Start Command: `cd server && uvicorn main:app --host 0.0.0.0 --port $PORT`
+   - Add environment variable: `JWT_SECRET=your-secret-key`
+   - Deploy and copy your backend URL (e.g., `https://vanish-chat-api.onrender.com`)
+
+2. **Deploy Frontend on Netlify:**
+   - Go to [netlify.com](https://netlify.com) and sign up
+   - Click "Add new site" → "Import an existing project"
+   - Connect your GitHub repo
+   - Configure build settings:
+     - Base directory: `client`
+     - Build command: `npm run build`
+     - Publish directory: `client/dist`
+   - Add environment variables:
+     - `VITE_API_URL`: `https://your-render-backend-url`
+     - `VITE_WS_URL`: `wss://your-render-backend-url` (note: wss:// for WebSocket secure)
+   - Deploy!
+
+3. **Update CORS on Backend:**
+   - In `server/main.py`, update the CORS origins to include your Netlify URL
+
 ## Project Structure
 
 ```

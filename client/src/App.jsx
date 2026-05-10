@@ -15,7 +15,8 @@ function App() {
       setUser(userData)
       
       // Connect to WebSocket
-      ws.current = new WebSocket(`ws://localhost:5000/ws/${userData.userId}`)
+      const wsUrl = import.meta.env.VITE_WS_URL || 'ws://localhost:5000'
+      ws.current = new WebSocket(`${wsUrl}/ws/${userData.userId}`)
       
       ws.current.onopen = () => {
         console.log('WebSocket connected')
