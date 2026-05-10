@@ -2,19 +2,19 @@ services:
   - type: web
     name: vanish-chat-backend
     env: python
+    region: oregon
     buildCommand: pip install -r server/requirements.txt
-    startCommand: cd server && python main.py
+    startCommand: cd server && uvicorn main:app --host 0.0.0.0 --port $PORT
     envVars:
       - key: JWT_SECRET
         generateValue: true
-      - key: PORT
-        value: 5000
 
   - type: web
     name: vanish-chat-frontend
     env: python
+    region: oregon
     buildCommand: pip install -r frontend/requirements.txt
-    startCommand: cd frontend && streamlit run app.py --server.port=8501
+    startCommand: cd frontend && streamlit run app.py --server.port=$PORT --server.address=0.0.0.0
     envVars:
       - key: BACKEND_URL
         value: https://vanish-chat-backend.onrender.com
